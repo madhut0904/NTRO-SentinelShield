@@ -70,17 +70,4 @@ Console URL: `http://localhost:5173`
 python -m pytest sentinelshield/tests/test_sentinelshield.py -v
 ```
 
----
 
-## 🏆 5-Minute SIH Jury Demo Flow
-
-1. Open **SentinelShield Dashboard** at `http://localhost:5173`.
-2. Inspect the **Target Safety Status** (Sandbox Only: GREEN).
-3. Navigate to **5-Min SIH Demo** tab.
-4. **Stage 1 (Baseline):** User A accesses own dossier `dossier_101` $\rightarrow$ `200 OK` (Allowed).
-5. **Stage 2 (BOLA Exploit):** User B requests User A's dossier $\rightarrow$ `200 OK` ❌ (Vulnerability triggered).
-6. **Stage 3 (Cross-Layer Correlation):** Inspect correlated evidence with SHA-256 hash.
-7. **Stage 4 (Safe PoC):** Execute safe non-destructive verification.
-8. **Stage 5 (Remediation):** Apply unified diff patch to the sandbox container.
-9. **Stage 6 (Retest):** Rerun test: `BEFORE: 200 OK ❌` $\rightarrow$ `AFTER: 403 FORBIDDEN ✓`.
-10. **Stage 7 (Proof):** Status updates to `SECURITY CONTROL VERIFIED` and download final VAPT PDF report!
