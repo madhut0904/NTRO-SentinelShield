@@ -42,32 +42,40 @@ SentinelShield enforces strict hard isolation policies:
 
 ---
 
-## ⚡ Quickstart & Running Locally
+## ⚡ Quickstart & Deployment
 
-### 1. Run the Backend (FastAPI)
+### 🐳 Option 1: Docker Compose (One-Command Launch)
 ```bash
-cd sentinelshield/backend
-python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+# Build and start all 3 services in isolated private network
+docker compose up -d --build
 ```
-API Documentation: `http://localhost:8000/docs`
+- **SOC Console:** [http://localhost:5173](http://localhost:5173)
+- **FastAPI API & Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Isolated Sandbox:** [http://localhost:8080](http://localhost:8080)
 
-### 2. Run the Isolated Sandbox Target (Digital Twin)
-```bash
-cd sentinelshield/sandbox
-python target_app.py
-```
-Sandbox Target URL: `http://localhost:8080`
+### 💻 Option 2: Local One-Click Startup
+```powershell
+# Windows (PowerShell)
+.\start.ps1
 
-### 3. Run the SOC Frontend Console (React + Tailwind)
-```bash
-cd sentinelshield/frontend
-npm run dev
-```
-Console URL: `http://localhost:5173`
-
-### 4. Run the Automated Test Suite
-```bash
-python -m pytest sentinelshield/tests/test_sentinelshield.py -v
+# Linux / macOS (Bash)
+chmod +x start.sh && ./start.sh
 ```
 
+### 🧪 Option 3: Run Automated Test Suite
+```bash
+python -m pytest tests/ -v
+```
+
+For comprehensive cloud, VPS, and production deployment instructions, see [DEPLOYMENT.md](file:///c:/Users/MADHU%20T/OneDrive/Projects/NTRO/DEPLOYMENT.md).
+
+---
+
+## 📋 Target Registration for Authentic World Monitor
+To audit the authentic cloned repository of [`koala73/worldmonitor`](https://github.com/koala73/worldmonitor):
+- **Target Name:** `World Monitor Sandbox (koala73/worldmonitor)`
+- **Target URL:** `http://localhost:8080`
+- **Repository Path:** `C:\Users\MADHU T\OneDrive\Projects\worldmonitor`
+- **Docker Compose Path:** `./sandbox/docker-compose.yml`
+- **Branch:** `main` | **Environment:** `SANDBOX`
 
