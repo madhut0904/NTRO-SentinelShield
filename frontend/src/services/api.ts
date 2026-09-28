@@ -1,6 +1,6 @@
 import { Target, Assessment, Finding, SecurityControl, DashboardStats, ReportItem } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_BASE as string) || '/api';
 
 export const api = {
   // Targets
