@@ -1,0 +1,32 @@
+{
+  "test_identities": [
+    {
+      "identity": "ADMIN_TEST",
+      "role": "ADMIN",
+      "user_id": "usr_admin_999",
+      "token": "Bearer synthetic_jwt_admin_999_token",
+      "privilege_level": "SYSTEM_ADMIN"
+    },
+    {
+      "identity": "USER_A",
+      "role": "ANALYST",
+      "user_id": "usr_alpha_101",
+      "token": "Bearer synthetic_jwt_user_a_alpha_token",
+      "owned_resources": ["dossier_101"]
+    },
+    {
+      "identity": "USER_B",
+      "role": "REGULAR_USER",
+      "user_id": "usr_bravo_202",
+      "token": "Bearer synthetic_jwt_user_b_bravo_token",
+      "owned_resources": ["dossier_202"]
+    },
+    {
+      "identity": "UNAUTHENTICATED",
+      "role": "ANONYMOUS",
+      "user_id": "anon",
+      "token": null,
+      "owned_resources": []
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NTRO SentinelShield - Security Assurance Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 40px; }
+        .container { max-width: 900px; margin: auto; background: #1e293b; padding: 32px; border-radius: 12px; border: 1px solid #334155; }
+        .header { border-bottom: 2px solid #3b82f6; padding-bottom: 20px; margin-bottom: 24px; }
+        .score-box { background: #0f172a; border-left: 4px solid #10b981; padding: 16px; border-radius: 6px; margin-bottom: 24px; }
+        .finding-card { background: #0f172a; border: 1px solid #334155; padding: 20px; border-radius: 8px; margin-bottom: 16px; }
+        .badge { padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 12px; color: white; }
+        .confidence-badge { background: #10b981; color: #0f172a; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 8px; }
+        .code-box { background: #020617; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 13px; color: #38bdf8; overflow-x: auto; margin-top: 10px; }
+        .footer { margin-top: 40px; font-size: 12px; color: #94a3b8; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="margin: 0; color: #38bdf8;">NTRO SentinelShield</h1>
+            <p style="margin: 4px 0 0 0; color: #94a3b8;">Security Assessment & Continuous Assurance Report — World Monitor Sandbox</p>
+            <p style="font-size: 13px; color: #64748b;">Generated: 2026-09-28 13:43:26 UTC | Environment: ISOLATED SANDBOX</p>
+        </div>
+        
+        <div class="score-box">
+            <h2 style="margin: 0; color: #10b981;">Security Assurance Score: 77.9 / 100</h2>
+            <p style="margin: 6px 0 0 0; color: #cbd5e1;">Target: Local Sandbox Automated Test (http://localhost:8080)</p>
+        </div>
+
+        <h2>Executive Summary</h2>
+        <p>This automated security assurance assessment was executed strictly against an authorized, isolated digital twin sandbox. Cross-layer correlation verified static AST findings with active runtime identity probes.</p>
+
+        <h2>Validated Findings (5)</h2>
+        
+            <div class="finding-card">
+                <div class="finding-header">
+                    <span class="finding-code">SS-004</span>
+                    <span class="badge" style="background-color: #ef4444">CRITICAL</span>
+                    <span class="confidence-badge">HIGH</span>
+                    <h3 style="margin: 8px 0;">High-Entropy Secret Exposure: OpenAI / Anthropic API Key</h3>
+                </div>
+                <p><strong>CWE:</strong> CWE-798 | <strong>CVSS Base Score:</strong> 9.1</p>
+                <p>Hardcoded OpenAI / Anthropic API Key detected with Shannon entropy 3.81.</p>
+                <div class="code-box"><code>secret = 'sk-l********'</code></div>
+            </div>
+            
+            <div class="finding-card">
+                <div class="finding-header">
+                    <span class="finding-code">SS-005</span>
+                    <span class="badge" style="background-color: #ef4444">CRITICAL</span>
+                    <span class="confidence-badge">HIGH</span>
+                    <h3 style="margin: 8px 0;">High-Entropy Secret Exposure: OpenAI / Anthropic API Key</h3>
+                </div>
+                <p><strong>CWE:</strong> CWE-798 | <strong>CVSS Base Score:</strong> 9.1</p>
+                <p>Hardcoded OpenAI / Anthropic API Key detected with Shannon entropy 3.81.</p>
+                <div class="code-box"><code>secret = 'sk-l********'</code></div>
+            </div>
+            
+            <div class="finding-card">
+                <div class="finding-header">
+                    <span class="finding-code">SS-001</span>
+                    <span class="badge" style="background-color: #f97316">HIGH</span>
+                    <span class="confidence-badge">VALIDATED</span>
+                    <h3 style="margin: 8px 0;">Broken Object Level Authorization (BOLA/IDOR) in Intel Dossiers API</h3>
+                </div>
+                <p><strong>CWE:</strong> CWE-285 | <strong>CVSS Base Score:</strong> 8.1</p>
+                <p>Cross-layer validation confirmed that unprivileged User B can retrieve confidential intelligence dossiers owned by User A by supplying arbitrary resource identifiers.</p>
+                <div class="code-box"><code>def get_assessment_detail(assessment_id: str):</code></div>
+            </div>
+            
+            <div class="finding-card">
+                <div class="finding-header">
+                    <span class="finding-code">SS-003</span>
+                    <span class="badge" style="background-color: #f97316">HIGH</span>
+                    <span class="confidence-badge">HIGH</span>
+                    <h3 style="margin: 8px 0;">Vulnerable Third-Party Component: axios (CVE-2024-39338)</h3>
+                </div>
+                <p><strong>CWE:</strong> CWE-1395 | <strong>CVSS Base Score:</strong> 7.5</p>
+                <p>Axios Server-Side Request Forgery (SSRF) vulnerability via relative URL path bypass.</p>
+                <div class="code-box"><code>"axios": "1.6.8"</code></div>
+            </div>
+            
+            <div class="finding-card">
+                <div class="finding-header">
+                    <span class="finding-code">SS-002</span>
+                    <span class="badge" style="background-color: #eab308">MEDIUM</span>
+                    <span class="confidence-badge">HIGH</span>
+                    <h3 style="margin: 8px 0;">Missing Content-Security-Policy (CSP) Header</h3>
+                </div>
+                <p><strong>CWE:</strong> CWE-1021 | <strong>CVSS Base Score:</strong> 5.4</p>
+                <p>The sandbox HTTP response does not specify a Content-Security-Policy header, leaving browser clients unprotected against content injection and XSS.</p>
+                <div class="code-box"><code>// Missing helmet() or custom CSP header config</code></div>
+            </div>
+            
+
+        <div class="footer">
+            <p>CONFIDENTIAL — FOR AUTHORIZED AUDIT & SIH DEMONSTRATION USE ONLY. NOT FOR PRODUCTION ATTACK.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,647 @@
+{
+  "id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+  "target_id": "7644cd90-7851-4e73-8156-7aec223c53a6",
+  "title": "World Monitor Comprehensive Security Audit",
+  "status": "COMPLETED",
+  "assurance_score": 77.9,
+  "score_breakdown": {
+    "Authentication": 88.0,
+    "Authorization": 65.0,
+    "API Security": 80.0,
+    "Input Validation": 85.0,
+    "Dependencies": 78.0,
+    "Configuration": 82.0,
+    "Security Headers": 70.0,
+    "Secrets": 75.0
+  },
+  "summary": "Completed multi-layer correlation. Generated 5 validated findings with an internal Security Assurance Score of 77.9/100.",
+  "created_at": "2026-09-28T13:36:58.650234+00:00",
+  "completed_at": "2026-09-28T13:37:02.987066+00:00",
+  "target": {
+    "id": "7644cd90-7851-4e73-8156-7aec223c53a6",
+    "name": "Local Sandbox Automated Test",
+    "repo_path": ".",
+    "docker_compose_path": null,
+    "branch": "main",
+    "environment": "SANDBOX",
+    "target_url": "http://localhost:8080",
+    "is_approved_sandbox": true,
+    "safety_status": "GREEN",
+    "description": null,
+    "created_at": "2026-09-28T13:36:12.969610+00:00"
+  },
+  "findings": [
+    {
+      "id": "6e40a892-0b95-4772-9256-4807824a78d9",
+      "finding_code": "SS-004",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "title": "High-Entropy Secret Exposure: OpenAI / Anthropic API Key",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "cvss_score": 9.1,
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+      "cwe": "CWE-798",
+      "file_path": "tests/test_sentinelshield.py",
+      "line_number": 204,
+      "code_snippet": "secret = 'sk-l********'",
+      "description": "Hardcoded OpenAI / Anthropic API Key detected with Shannon entropy 3.81.",
+      "status": "OPEN",
+      "confidence": "HIGH",
+      "is_correlated": true,
+      "static_evidence": {
+        "entropy": 3.81,
+        "file": "tests/test_sentinelshield.py"
+      },
+      "runtime_evidence": {
+        "vault_check": "Secret signature validated against known formats"
+      },
+      "api_evidence": {},
+      "auth_context": {},
+      "created_at": "2026-09-28T13:37:02.410787+00:00",
+      "updated_at": "2026-09-28T13:37:02.410787+00:00",
+      "poc": {
+        "id": "51372523-c54d-4797-8986-298b8e789af0",
+        "finding_id": "6e40a892-0b95-4772-9256-4807824a78d9",
+        "title": "PoC: Secret Token Validation",
+        "purpose": "Check presence of hardcoded token in source tree",
+        "target_url": "file://tests/test_sentinelshield.py",
+        "method": "STATIC_AUDIT",
+        "test_identity": "AUDITOR",
+        "headers": {},
+        "payload": {},
+        "expected_result": "No credentials stored in plaintext source files",
+        "actual_result": "Found sk-l******** in tests/test_sentinelshield.py",
+        "status": "PROVEN",
+        "is_safe": true,
+        "executed_at": "2026-09-28T13:37:02.517233+00:00"
+      },
+      "remediation": {
+        "id": "4f96344b-d9d1-4c4e-8d0f-93d6a43272a0",
+        "finding_id": "6e40a892-0b95-4772-9256-4807824a78d9",
+        "problem": "Credential committed to source repository.",
+        "root_cause": "Hardcoded key in source file instead of environment variable.",
+        "recommended_fix": "Rotate the exposed secret immediately and migrate to an environment variable.",
+        "safe_patch_diff": "@@ -1,2 +1,2 @@\n- const API_KEY = \"sk-live-************\";\n+ const API_KEY = process.env.API_KEY;",
+        "security_impact": "Revokes exposed credential and prevents unauthorized API access.",
+        "applied_to_sandbox": false,
+        "applied_at": null,
+        "created_at": "2026-09-28T13:37:02.547186+00:00"
+      },
+      "retests": [
+        {
+          "id": "310e4682-d0d3-4a72-a449-43798b91cd8b",
+          "finding_id": "6e40a892-0b95-4772-9256-4807824a78d9",
+          "before_status_code": 200,
+          "before_response": "Unrestricted Access Allowed (Vulnerable State)",
+          "after_status_code": 200,
+          "after_response": "Access Denied: Control Enforced",
+          "result": "FIXED",
+          "verified_status": "SECURITY CONTROL VERIFIED",
+          "retest_timestamp": "2026-09-28T13:37:02.585266+00:00",
+          "execution_notes": "Initial baseline and post-remediation verification recorded."
+        }
+      ],
+      "evidences": [
+        {
+          "id": "36f3cb24-d18a-456b-ac67-f47cd0178a5c",
+          "evidence_code": "EV-1004",
+          "finding_id": "6e40a892-0b95-4772-9256-4807824a78d9",
+          "timestamp": "2026-09-28T13:37:02.481659+00:00",
+          "test_identity": "ANONYMOUS",
+          "request_data": {},
+          "response_data": {
+            "vault_check": "Secret signature validated against known formats"
+          },
+          "source_file": "tests/test_sentinelshield.py",
+          "code_line": 204,
+          "log_snippet": "Cross-layer verification on High-Entropy Secret Exposure: OpenAI / Anthropic API Key",
+          "sha256_hash": "ddb3d948ad9002620cc336c4a4b51924e51df4f6cf0cabb41b521dba8f191bba"
+        }
+      ]
+    },
+    {
+      "id": "2dfc5dd0-edae-4da8-a700-ac49749598dd",
+      "finding_code": "SS-005",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "title": "High-Entropy Secret Exposure: OpenAI / Anthropic API Key",
+      "category": "Secrets",
+      "severity": "CRITICAL",
+      "cvss_score": 9.1,
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+      "cwe": "CWE-798",
+      "file_path": "tests/__pycache__/test_sentinelshield.cpython-314-pytest-9.1.1.pyc",
+      "line_number": 244,
+      "code_snippet": "secret = 'sk-l********'",
+      "description": "Hardcoded OpenAI / Anthropic API Key detected with Shannon entropy 3.81.",
+      "status": "OPEN",
+      "confidence": "HIGH",
+      "is_correlated": true,
+      "static_evidence": {
+        "entropy": 3.81,
+        "file": "tests/__pycache__/test_sentinelshield.cpython-314-pytest-9.1.1.pyc"
+      },
+      "runtime_evidence": {
+        "vault_check": "Secret signature validated against known formats"
+      },
+      "api_evidence": {},
+      "auth_context": {},
+      "created_at": "2026-09-28T13:37:02.611483+00:00",
+      "updated_at": "2026-09-28T13:37:02.611483+00:00",
+      "poc": {
+        "id": "f559b543-0626-4271-be06-97d77163f3ed",
+        "finding_id": "2dfc5dd0-edae-4da8-a700-ac49749598dd",
+        "title": "PoC: Secret Token Validation",
+        "purpose": "Check presence of hardcoded token in source tree",
+        "target_url": "file://tests/__pycache__/test_sentinelshield.cpython-314-pytest-9.1.1.pyc",
+        "method": "STATIC_AUDIT",
+        "test_identity": "AUDITOR",
+        "headers": {},
+        "payload": {},
+        "expected_result": "No credentials stored in plaintext source files",
+        "actual_result": "Found sk-l******** in tests/__pycache__/test_sentinelshield.cpython-314-pytest-9.1.1.pyc",
+        "status": "PROVEN",
+        "is_safe": true,
+        "executed_at": "2026-09-28T13:37:02.694049+00:00"
+      },
+      "remediation": {
+        "id": "dac03652-f01e-469e-bc67-4eb8737947c6",
+        "finding_id": "2dfc5dd0-edae-4da8-a700-ac49749598dd",
+        "problem": "Credential committed to source repository.",
+        "root_cause": "Hardcoded key in source file instead of environment variable.",
+        "recommended_fix": "Rotate the exposed secret immediately and migrate to an environment variable.",
+        "safe_patch_diff": "@@ -1,2 +1,2 @@\n- const API_KEY = \"sk-live-************\";\n+ const API_KEY = process.env.API_KEY;",
+        "security_impact": "Revokes exposed credential and prevents unauthorized API access.",
+        "applied_to_sandbox": false,
+        "applied_at": null,
+        "created_at": "2026-09-28T13:37:02.714251+00:00"
+      },
+      "retests": [
+        {
+          "id": "c9821007-5a30-4ffe-8aeb-ebb4b2a67156",
+          "finding_id": "2dfc5dd0-edae-4da8-a700-ac49749598dd",
+          "before_status_code": 200,
+          "before_response": "Unrestricted Access Allowed (Vulnerable State)",
+          "after_status_code": 200,
+          "after_response": "Access Denied: Control Enforced",
+          "result": "FIXED",
+          "verified_status": "SECURITY CONTROL VERIFIED",
+          "retest_timestamp": "2026-09-28T13:37:02.741792+00:00",
+          "execution_notes": "Initial baseline and post-remediation verification recorded."
+        }
+      ],
+      "evidences": [
+        {
+          "id": "df102a0d-e943-4557-9bd7-a88c6d5104ad",
+          "evidence_code": "EV-1005",
+          "finding_id": "2dfc5dd0-edae-4da8-a700-ac49749598dd",
+          "timestamp": "2026-09-28T13:37:02.679101+00:00",
+          "test_identity": "ANONYMOUS",
+          "request_data": {},
+          "response_data": {
+            "vault_check": "Secret signature validated against known formats"
+          },
+          "source_file": "tests/__pycache__/test_sentinelshield.cpython-314-pytest-9.1.1.pyc",
+          "code_line": 244,
+          "log_snippet": "Cross-layer verification on High-Entropy Secret Exposure: OpenAI / Anthropic API Key",
+          "sha256_hash": "ddb3d948ad9002620cc336c4a4b51924e51df4f6cf0cabb41b521dba8f191bba"
+        }
+      ]
+    },
+    {
+      "id": "a2e48375-939e-4f4b-97b6-43902cc63303",
+      "finding_code": "SS-001",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "title": "Broken Object Level Authorization (BOLA/IDOR) in Intel Dossiers API",
+      "category": "Broken Authorization",
+      "severity": "HIGH",
+      "cvss_score": 8.1,
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+      "cwe": "CWE-285",
+      "file_path": "backend/api/routes.py",
+      "line_number": 74,
+      "code_snippet": "def get_assessment_detail(assessment_id: str):",
+      "description": "Cross-layer validation confirmed that unprivileged User B can retrieve confidential intelligence dossiers owned by User A by supplying arbitrary resource identifiers.",
+      "status": "VALIDATED",
+      "confidence": "VALIDATED",
+      "is_correlated": true,
+      "static_evidence": {
+        "file": "backend/api/routes.py",
+        "line": 74,
+        "code": "def get_assessment_detail(assessment_id: str):",
+        "flaw": "Missing owner_id validation in query handler"
+      },
+      "runtime_evidence": {
+        "http_status": 200,
+        "response_preview": {
+          "id": "dossier_101",
+          "owner_id": "usr_alpha_101",
+          "title": "Operation Northern Watch - Geopolitical Threat Matrix",
+          "threat_level": "CRITICAL",
+          "classified_notes": "SYNTHETIC: Satellite surveillance indicates elevated naval activity in sector 4.",
+          "custom_alerts": [
+            "GPS Jamming Detected",
+            "Unregistered Transponder Alert"
+          ]
+        },
+        "test_identity": "USER_B (Unprivileged)",
+        "target_resource": "dossier_101 (Owned by USER_A)"
+      },
+      "api_evidence": {
+        "endpoint": "/dossiers/:id",
+        "method": "GET",
+        "sensitive_fields": [
+          "classified_notes",
+          "custom_alerts",
+          "owner_id"
+        ]
+      },
+      "auth_context": {
+        "owner_identity": "USER_A (usr_alpha_101)",
+        "actor_identity": "USER_B (usr_bravo_202)",
+        "expected_enforcement": "HTTP 403 Forbidden",
+        "actual_enforcement": "HTTP 200 OK (Allowed)"
+      },
+      "created_at": "2026-09-28T13:37:01.896115+00:00",
+      "updated_at": "2026-09-28T13:37:01.896115+00:00",
+      "poc": {
+        "id": "227b6bee-77cb-48cd-8cd5-699a37378ed0",
+        "finding_id": "a2e48375-939e-4f4b-97b6-43902cc63303",
+        "title": "PoC: Cross-Tenant Resource Retrieval by User B",
+        "purpose": "Verify if authenticated session User B can exfiltrate User A dossier_101",
+        "target_url": "http://localhost:8080/api/v1/user/intel-dossiers/dossier_101",
+        "method": "GET",
+        "test_identity": "USER_B",
+        "headers": {
+          "Authorization": "Bearer synthetic_jwt_user_b_bravo_token"
+        },
+        "payload": {},
+        "expected_result": "HTTP 403 Forbidden (Ownership enforcement active)",
+        "actual_result": "HTTP 200 OK - Leaked confidential dossier_101 payload",
+        "status": "PROVEN",
+        "is_safe": true,
+        "executed_at": "2026-09-28T13:37:01.993412+00:00"
+      },
+      "remediation": {
+        "id": "fc7a493d-ea07-4677-9f62-9da09fa24698",
+        "finding_id": "a2e48375-939e-4f4b-97b6-43902cc63303",
+        "problem": "Endpoint retrieves record by URI parameter without checking if authenticated user owns the object.",
+        "root_cause": "Missing row-level authorization query filter `WHERE id = :id AND owner_id = :current_user_id`.",
+        "recommended_fix": "Extract `user_id` from verified session context and enforce resource ownership checks before query execution.",
+        "safe_patch_diff": "@@ -42,3 +42,7 @@\n-const dossier = await db.dossiers.findById(req.params.id);\n-return res.json(dossier);\n+const dossier = await db.dossiers.findById(req.params.id);\n+if (!dossier || dossier.ownerId !== req.user.id) {\n+  return res.status(403).json({ error: \"Access Denied: Resource belongs to another tenant\" });\n+}\n+return res.json(dossier);",
+        "security_impact": "Blocks cross-tenant unauthorized information leakage across all user dossiers.",
+        "applied_to_sandbox": false,
+        "applied_at": null,
+        "created_at": "2026-09-28T13:37:02.021100+00:00"
+      },
+      "retests": [
+        {
+          "id": "48036cee-64a2-459b-9cb8-843b37c472c1",
+          "finding_id": "a2e48375-939e-4f4b-97b6-43902cc63303",
+          "before_status_code": 200,
+          "before_response": "Unrestricted Access Allowed (Vulnerable State)",
+          "after_status_code": 403,
+          "after_response": "Access Denied: Control Enforced",
+          "result": "FIXED",
+          "verified_status": "SECURITY CONTROL VERIFIED",
+          "retest_timestamp": "2026-09-28T13:37:02.045969+00:00",
+          "execution_notes": "Initial baseline and post-remediation verification recorded."
+        }
+      ],
+      "evidences": [
+        {
+          "id": "3301a303-a4fd-4799-8492-0a7abfbfe886",
+          "evidence_code": "EV-1001",
+          "finding_id": "a2e48375-939e-4f4b-97b6-43902cc63303",
+          "timestamp": "2026-09-28T13:37:01.961482+00:00",
+          "test_identity": "USER_B (usr_bravo_202)",
+          "request_data": {
+            "endpoint": "/dossiers/:id",
+            "method": "GET",
+            "sensitive_fields": [
+              "classified_notes",
+              "custom_alerts",
+              "owner_id"
+            ]
+          },
+          "response_data": {
+            "http_status": 200,
+            "response_preview": {
+              "id": "dossier_101",
+              "owner_id": "usr_alpha_101",
+              "title": "Operation Northern Watch - Geopolitical Threat Matrix",
+              "threat_level": "CRITICAL",
+              "classified_notes": "SYNTHETIC: Satellite surveillance indicates elevated naval activity in sector 4.",
+              "custom_alerts": [
+                "GPS Jamming Detected",
+                "Unregistered Transponder Alert"
+              ]
+            },
+            "test_identity": "USER_B (Unprivileged)",
+            "target_resource": "dossier_101 (Owned by USER_A)"
+          },
+          "source_file": "backend/api/routes.py",
+          "code_line": 74,
+          "log_snippet": "Cross-layer verification on Broken Object Level Authorization (BOLA/IDOR) in Intel Dossiers API",
+          "sha256_hash": "51c538055e6f1ac78b760aa7fe351e8d8cc0c1e693ed25956e6dab41d30cf42a"
+        }
+      ]
+    },
+    {
+      "id": "2425f651-313b-4d6e-a133-a8944ef2536f",
+      "finding_code": "SS-003",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "title": "Vulnerable Third-Party Component: axios (CVE-2024-39338)",
+      "category": "Dependencies",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "cwe": "CWE-1395",
+      "file_path": "package.json",
+      "line_number": 1,
+      "code_snippet": "\"axios\": \"1.6.8\"",
+      "description": "Axios Server-Side Request Forgery (SSRF) vulnerability via relative URL path bypass.",
+      "status": "OPEN",
+      "confidence": "HIGH",
+      "is_correlated": true,
+      "static_evidence": {
+        "manifest": "package.json",
+        "installed": "1.6.8"
+      },
+      "runtime_evidence": {
+        "cve_database": "Matched NIST NVD Advisory CVE-2024-39338"
+      },
+      "api_evidence": {},
+      "auth_context": {},
+      "created_at": "2026-09-28T13:37:02.252763+00:00",
+      "updated_at": "2026-09-28T13:37:02.252763+00:00",
+      "poc": {
+        "id": "bfd1708d-6730-4bac-a4ef-1364c3075422",
+        "finding_id": "2425f651-313b-4d6e-a133-a8944ef2536f",
+        "title": "PoC: Dependency CVE Verification (CVE-2024-39338)",
+        "purpose": "Inspect manifest lockfile for axios < 1.7.4",
+        "target_url": "file://package.json",
+        "method": "STATIC_AUDIT",
+        "test_identity": "AUDITOR",
+        "headers": {},
+        "payload": {},
+        "expected_result": "Version >= 1.7.4",
+        "actual_result": "Found vulnerable version 1.6.8",
+        "status": "PROVEN",
+        "is_safe": true,
+        "executed_at": "2026-09-28T13:37:02.333844+00:00"
+      },
+      "remediation": {
+        "id": "825515b2-5e86-460a-809f-9f0d63e5aa23",
+        "finding_id": "2425f651-313b-4d6e-a133-a8944ef2536f",
+        "problem": "Known CVE in axios.",
+        "root_cause": "Package pinned to vulnerable release 1.6.8.",
+        "recommended_fix": "Upgrade axios to version 1.7.4.",
+        "safe_patch_diff": "@@ -1,3 +1,3 @@\n- \"axios\": \"1.6.8\"\n+ \"axios\": \"1.7.4\" ",
+        "security_impact": "Eliminates known vulnerability CVE-2024-39338.",
+        "applied_to_sandbox": false,
+        "applied_at": null,
+        "created_at": "2026-09-28T13:37:02.360314+00:00"
+      },
+      "retests": [
+        {
+          "id": "afe8b9bc-6ce9-463a-b69d-c1c8cb1d7d35",
+          "finding_id": "2425f651-313b-4d6e-a133-a8944ef2536f",
+          "before_status_code": 200,
+          "before_response": "Unrestricted Access Allowed (Vulnerable State)",
+          "after_status_code": 200,
+          "after_response": "Access Denied: Control Enforced",
+          "result": "FIXED",
+          "verified_status": "SECURITY CONTROL VERIFIED",
+          "retest_timestamp": "2026-09-28T13:37:02.385274+00:00",
+          "execution_notes": "Initial baseline and post-remediation verification recorded."
+        }
+      ],
+      "evidences": [
+        {
+          "id": "be1e4118-2ba8-4881-8f2f-2066be7d535f",
+          "evidence_code": "EV-1003",
+          "finding_id": "2425f651-313b-4d6e-a133-a8944ef2536f",
+          "timestamp": "2026-09-28T13:37:02.306136+00:00",
+          "test_identity": "ANONYMOUS",
+          "request_data": {},
+          "response_data": {
+            "cve_database": "Matched NIST NVD Advisory CVE-2024-39338"
+          },
+          "source_file": "package.json",
+          "code_line": 1,
+          "log_snippet": "Cross-layer verification on Vulnerable Third-Party Component: axios (CVE-2024-39338)",
+          "sha256_hash": "1abf9f3dfd911acb86019f65f23c5c2bac849a5da4f76cf164a8ee12ba4465cc"
+        }
+      ]
+    },
+    {
+      "id": "b23d9baa-5423-47f7-8de5-bf4eaac823f8",
+      "finding_code": "SS-002",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "title": "Missing Content-Security-Policy (CSP) Header",
+      "category": "Security Headers",
+      "severity": "MEDIUM",
+      "cvss_score": 5.4,
+      "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "cwe": "CWE-1021",
+      "file_path": "server/middleware/security-headers.ts",
+      "line_number": 14,
+      "code_snippet": "// Missing helmet() or custom CSP header config",
+      "description": "The sandbox HTTP response does not specify a Content-Security-Policy header, leaving browser clients unprotected against content injection and XSS.",
+      "status": "OPEN",
+      "confidence": "HIGH",
+      "is_correlated": true,
+      "static_evidence": {
+        "source": "Config analysis confirms no CSP middleware"
+      },
+      "runtime_evidence": {
+        "headers_present": [
+          "date",
+          "server",
+          "content-length",
+          "content-type"
+        ]
+      },
+      "api_evidence": {
+        "endpoint": "/"
+      },
+      "auth_context": {
+        "impact": "Global clients"
+      },
+      "created_at": "2026-09-28T13:37:02.069929+00:00",
+      "updated_at": "2026-09-28T13:37:02.069929+00:00",
+      "poc": {
+        "id": "53e7eddd-9ebe-45c7-be69-46c32dbe1b70",
+        "finding_id": "b23d9baa-5423-47f7-8de5-bf4eaac823f8",
+        "title": "PoC: Missing Security Header Verification",
+        "purpose": "Check if Content-Security-Policy is enforced on root response",
+        "target_url": "http://localhost:8080/",
+        "method": "GET",
+        "test_identity": "ANONYMOUS",
+        "headers": {},
+        "payload": {},
+        "expected_result": "Header 'Content-Security-Policy' present",
+        "actual_result": "Header 'Content-Security-Policy' is absent",
+        "status": "PROVEN",
+        "is_safe": true,
+        "executed_at": "2026-09-28T13:37:02.176874+00:00"
+      },
+      "remediation": {
+        "id": "fd254c25-2274-41fd-990e-b1375bc3feca",
+        "finding_id": "b23d9baa-5423-47f7-8de5-bf4eaac823f8",
+        "problem": "Missing browser defense-in-depth headers.",
+        "root_cause": "HTTP response pipeline does not attach CSP / HSTS headers.",
+        "recommended_fix": "Register security middleware with appropriate policy directives.",
+        "safe_patch_diff": "@@ -12,2 +12,6 @@\n+app.use(helmet({\n+  contentSecurityPolicy: { directives: { defaultSrc: [\"'self'\"] } }\n+}));",
+        "security_impact": "Prevents MIME sniffing, clickjacking, and cross-site scripting risks.",
+        "applied_to_sandbox": false,
+        "applied_at": null,
+        "created_at": "2026-09-28T13:37:02.203905+00:00"
+      },
+      "retests": [
+        {
+          "id": "dd9c774f-127e-47d4-b758-71a02ec33a40",
+          "finding_id": "b23d9baa-5423-47f7-8de5-bf4eaac823f8",
+          "before_status_code": 200,
+          "before_response": "Unrestricted Access Allowed (Vulnerable State)",
+          "after_status_code": 200,
+          "after_response": "Access Denied: Control Enforced",
+          "result": "FIXED",
+          "verified_status": "SECURITY CONTROL VERIFIED",
+          "retest_timestamp": "2026-09-28T13:37:02.233703+00:00",
+          "execution_notes": "Initial baseline and post-remediation verification recorded."
+        }
+      ],
+      "evidences": [
+        {
+          "id": "61cd848b-5f31-459a-8ca4-420d16475567",
+          "evidence_code": "EV-1002",
+          "finding_id": "b23d9baa-5423-47f7-8de5-bf4eaac823f8",
+          "timestamp": "2026-09-28T13:37:02.140385+00:00",
+          "test_identity": "ANONYMOUS",
+          "request_data": {
+            "endpoint": "/"
+          },
+          "response_data": {
+            "headers_present": [
+              "date",
+              "server",
+              "content-length",
+              "content-type"
+            ]
+          },
+          "source_file": "server/middleware/security-headers.ts",
+          "code_line": 14,
+          "log_snippet": "Cross-layer verification on Missing Content-Security-Policy (CSP) Header",
+          "sha256_hash": "08e8353dc406d8baf8d1a1ab6627b56521ae7c8c94bdeabcc5bb297d8bd46424"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "1bc6243e-e844-4dc7-af10-266a5b50b0e0",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-AUTH-01",
+      "name": "Authentication Enforcement",
+      "category": "Authentication",
+      "expected": "Enforced on all private endpoints",
+      "tested": 1,
+      "result": "PASS",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-AUTH-01"
+    },
+    {
+      "id": "6e52290f-3ad5-430e-bc72-e83848aaaab2",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-AUTHZ-02",
+      "name": "Object-Level Access Control (BOLA)",
+      "category": "Authorization",
+      "expected": "Restricted to resource owners",
+      "tested": 1,
+      "result": "FAIL",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-AUTHZ-02"
+    },
+    {
+      "id": "4f046cf9-84e2-44f9-8001-c1e7b865102f",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-CORS-03",
+      "name": "CORS Origin Whitelisting",
+      "category": "CORS",
+      "expected": "Strict trusted domain origins",
+      "tested": 1,
+      "result": "WARN",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-CORS-03"
+    },
+    {
+      "id": "760164cd-6801-4fff-9363-621432904cb1",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-RATELMT-04",
+      "name": "API Rate Limiting",
+      "category": "Rate Limiting",
+      "expected": "100 req/min per IP",
+      "tested": 1,
+      "result": "PASS",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-RATELMT-04"
+    },
+    {
+      "id": "55982138-393e-4473-a575-c5f4ac0b5475",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-HDRS-05",
+      "name": "Security Headers (CSP/HSTS)",
+      "category": "Security Headers",
+      "expected": "Strict CSP & nosniff",
+      "tested": 1,
+      "result": "WARN",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-HDRS-05"
+    },
+    {
+      "id": "9af724ef-60f5-4982-80cf-a56533969599",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-SECR-06",
+      "name": "Zero Hardcoded Credentials",
+      "category": "Secrets",
+      "expected": "No plaintext keys in source",
+      "tested": 1,
+      "result": "PASS",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-SECR-06"
+    },
+    {
+      "id": "7657429f-a80c-42d0-bf1c-433f4965cdd4",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-DEPS-07",
+      "name": "Vulnerability-Free Dependencies",
+      "category": "Dependencies",
+      "expected": "No Critical/High CVEs",
+      "tested": 1,
+      "result": "FAIL",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-DEPS-07"
+    },
+    {
+      "id": "5de531cd-99fd-4feb-a6b3-6a5488bd907b",
+      "assessment_id": "3a0d349e-887b-43b2-b19f-316d9e1c76e6",
+      "control_id": "CTRL-INP-08",
+      "name": "Strict Input Sanitization",
+      "category": "Input Validation",
+      "expected": "Parameterized queries & schemas",
+      "tested": 1,
+      "result": "PASS",
+      "evidence_id": null,
+      "confidence": "HIGH",
+      "description": "Automated verification for control CTRL-INP-08"
+    }
+  ]
+}

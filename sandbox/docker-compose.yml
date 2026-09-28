@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  sentinelshield-backend:
+    build:
+      context: ..
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./sentinelshield.db
+      - TARGET_URL=http://worldmonitor-sandbox:8080
+    depends_on:
+      - worldmonitor-sandbox
+
+  worldmonitor-sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ENVIRONMENT=ISOLATED_SANDBOX
+      - ALLOW_SYNTHETIC_TESTING=true

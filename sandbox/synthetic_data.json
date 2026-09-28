@@ -1,0 +1,23 @@
+{
+  "digital_twin_metadata": {
+    "target_name": "World Monitor Sandbox",
+    "version": "1.0.0-sandbox",
+    "classification": "SYNTHETIC_TEST_ENVIRONMENT_ONLY"
+  },
+  "geopolitical_events": [
+    {
+      "id": "geo_01",
+      "region": "Red Sea / Bab-el-Mandeb",
+      "event_type": "Maritime Commercial Risk",
+      "severity": "HIGH",
+      "synthetic": true
+    },
+    {
+      "id": "geo_02",
+      "region": "Eastern Mediterranean",
+      "event_type": "Submarine Cable Telemetry",
+      "severity": "MEDIUM",
+      "synthetic": true
+    }
+  ]
+}
